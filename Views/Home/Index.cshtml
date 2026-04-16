@@ -1,0 +1,35 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold">The Digital Cookbook</h1>
+        <p class="lead text-muted">
+            Your personal place to save, manage, and enjoy recipes.
+        </p>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded">
+                <h4>Save Recipes</h4>
+                <p>Store all your favorite meals in one place.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded">
+                <h4>Stay Organized</h4>
+                <p>Keep ingredients, instructions, and cooking time together.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded">
+                <h4>Cook Easily</h4>
+                <p>Find what you need quickly and get cooking faster.</p>
+            </div>
+            <a class="btn btn-primary btn-lg me-2" asp-controller="Auth" asp-action="Login">Login</a>
+            <a class="btn btn-outline-secondary btn-lg" asp-controller="Auth" asp-action="Register">Sign Up</a>
+        </div>
+    </div>
+</div>
