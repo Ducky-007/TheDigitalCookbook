@@ -6,18 +6,30 @@ namespace TheDigitalCookbook;
 
 public class Recipe
 {
-    // recipe details
-    public int Id { get; private set; }
-    public int UserId { get; private set; }
-    public string Name { get; private set; }
-    public string Category { get; private set; }
-    public List<string> Ingredients { get; private set; }
-    public List<string> Instructions { get; private set; }
-    public TimeSpan PrepTime { get; private set; }
-    public TimeSpan CookTime { get; private set; }
+    // EF Core needs a parameterless constructor
+    public Recipe()
+    {
+        Ingredients = new List<string>();
+        Instructions = new List<string>();
+    }
+
+    public int Id { get; set; }
+    public int UserId { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+
+    public List<string> Ingredients { get; set; } = new();
+    public List<string> Instructions { get; set; } = new();
+
+    public TimeSpan PrepTime { get; set; }
+    public TimeSpan CookTime { get; set; }
+
     public TimeSpan TotalTime => PrepTime + CookTime;
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-    public string URL { get; private set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public string URL { get; set; } = string.Empty;
 
     public Recipe(
         string name,
@@ -27,8 +39,8 @@ public class Recipe
         TimeSpan prepTime,
         TimeSpan cookTime,
         string url)
+        : this()
     {
-        // Validate required fields
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be empty.", nameof(name));
 
@@ -38,14 +50,8 @@ public class Recipe
         if (ingredients == null || ingredients.Count == 0)
             throw new ArgumentException("Ingredients cannot be empty.", nameof(ingredients));
 
-        if (ingredients.Any(i => string.IsNullOrWhiteSpace(i)))
-            throw new ArgumentException("Ingredients cannot contain empty items.", nameof(ingredients));
-
         if (instructions == null || instructions.Count == 0)
             throw new ArgumentException("Instructions cannot be empty.", nameof(instructions));
-
-        if (instructions.Any(i => string.IsNullOrWhiteSpace(i)))
-            throw new ArgumentException("Instructions cannot contain empty items.", nameof(instructions));
 
         if (prepTime < TimeSpan.Zero)
             throw new ArgumentException("PrepTime cannot be negative.", nameof(prepTime));
@@ -56,7 +62,6 @@ public class Recipe
         if (!string.IsNullOrWhiteSpace(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
             throw new ArgumentException("URL must be a valid absolute URL.", nameof(url));
 
-        // Assign validated values
         Name = name.Trim();
         Category = category.Trim();
         Ingredients = ingredients.Select(i => i.Trim()).ToList();

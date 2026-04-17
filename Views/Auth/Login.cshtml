@@ -1,11 +1,11 @@
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Login";
 }
 
 <div class="container mt-5" style="max-width: 500px;">
-    <h1 class="mb-4">Register</h1>
+    <h1 class="mb-4">Login</h1>
 
-    <form asp-controller="Auth" asp-action="Register" method="post">
+    <form asp-controller="Auth" asp-action="Login" method="post">
         <div class="mb-3">
             <label for="Username" class="form-label">Username</label>
             <input type="text" class="form-control" id="Username" name="Username" />
@@ -16,13 +16,13 @@
             <input type="password" class="form-control" id="Password" name="Password" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Create Account</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
-<br />
-<label>Already have an account? </label>
-<button type="button" 
-        class="btn btn-outline-secondary btn-lg"
-        onclick="window.location.href='@Url.Action("Login", "Auth")'">
-    Login here.
-</button>
+
+@if (TempData["LoginError"] != null)
+{
+    <script>
+        alert('@TempData["LoginError"]');
+    </script>
+}

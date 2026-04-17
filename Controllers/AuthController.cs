@@ -46,7 +46,7 @@ public class AuthController : Controller
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
 
-        //display message saying user added to databse
+        //display message saying user added to database
         TempData["message"] = $"{newUser} added to database.";
         return RedirectToAction("Login");
     }
@@ -62,16 +62,15 @@ public class AuthController : Controller
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
 
-        if (user == null)
+        if (user == null || !PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
         {
-            return Unauthorized("Invalid username or password.");
+            TempData["LoginError"] = "Invalid username or password.";
+            return View();
         }
-
-        if (!PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
-        {
-            return Unauthorized("Invalid username or password.");
-        }
-
-        return Ok("Login successful.");
+        
+        HttpContext.Session.SetInt32("UserId", user.Id);
+        HttpContext.Session.SetString("Username", user.Username);
+        
+        return RedirectToAction("Index", "Recipe");
     }
 }
