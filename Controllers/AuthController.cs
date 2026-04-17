@@ -7,9 +7,7 @@ using TheDigitalCookbook.Security;
 
 namespace TheDigitalCookbook.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController : Controller
 {
     private readonly AppDbContext _context;
 
@@ -18,26 +16,24 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
-    [HttpPost("register")]
-    public async Task<ActionResult<LoginResponse>> Register(RegisterRequest request)
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
         {
-            return BadRequest(new LoginResponse
-            {
-                Success = false,
-                Message = "Username and password are required."
-            });
+            return BadRequest("Username and password are required.");
         }
 
         var existingUser = await _context.Users.AnyAsync(u => u.Username == request.Username);
         if (existingUser)
         {
-            return Conflict(new LoginResponse
-            {
-                Success = false,
-                Message = "Username is already taken."
-            });
+            return Conflict("Username is already taken.");
         }
 
         var newUser = new User
@@ -50,40 +46,32 @@ public class AuthController : ControllerBase
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
 
-        return Ok(new LoginResponse
-        {
-            Success = true,
-            Message = "Registration successful."
-        });
+        //display message saying user added to databse
+        TempData["message"] = $"{newUser} added to database.";
+        return RedirectToAction("Login");
     }
 
-    [HttpPost("login")]
-    public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginRequest request)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
 
         if (user == null)
         {
-            return Unauthorized(new LoginResponse
-            {
-                Success = false,
-                Message = "Invalid username or password."
-            });
+            return Unauthorized("Invalid username or password.");
         }
 
         if (!PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
         {
-            return Unauthorized(new LoginResponse
-            {
-                Success = false,
-                Message = "Invalid username or password."
-            });
+            return Unauthorized("Invalid username or password.");
         }
 
-        return Ok(new LoginResponse
-        {
-            Success = true,
-            Message = "Login successful."
-        });
+        return Ok("Login successful.");
     }
 }

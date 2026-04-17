@@ -28,8 +28,13 @@
                 <h4>Cook Easily</h4>
                 <p>Find what you need quickly and get cooking faster.</p>
             </div>
+
             <a class="btn btn-primary btn-lg me-2" asp-controller="Auth" asp-action="Login">Login</a>
-            <a class="btn btn-outline-secondary btn-lg" asp-controller="Auth" asp-action="Register">Sign Up</a>
+            <button type="button"
+                    class="btn btn-outline-secondary btn-lg"
+                    onclick="window.location.href='@Url.Action("Register", "Auth")'">
+                Sign Up
+            </button>
         </div>
     </div>
 </div>
