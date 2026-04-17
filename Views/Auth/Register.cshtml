@@ -26,3 +26,10 @@
         onclick="window.location.href='@Url.Action("Login", "Auth")'">
     Login here.
 </button>
+
+@if (TempData["UsernameTaken"] != null)
+{
+    <script>
+        alert('@TempData["UsernameTaken"]');
+    </script>
+}

@@ -33,7 +33,8 @@ public class AuthController : Controller
         var existingUser = await _context.Users.AnyAsync(u => u.Username == request.Username);
         if (existingUser)
         {
-            return Conflict("Username is already taken.");
+            TempData["UsernameTaken"] = "Username is already taken.";
+            return View();
         }
 
         var newUser = new User
@@ -46,8 +47,7 @@ public class AuthController : Controller
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
 
-        //display message saying user added to database
-        TempData["message"] = $"{newUser} added to database.";
+        TempData["UserAdded"] = $"{newUser.Username} added successfully!";
         return RedirectToAction("Login");
     }
 
