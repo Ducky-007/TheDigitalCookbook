@@ -29,7 +29,7 @@ public class Recipe
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public string URL { get; set; } = string.Empty;
+    public string? URL { get; set; } = string.Empty;
 
     public Recipe(
         string name,
