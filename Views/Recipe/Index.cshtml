@@ -1,6 +1,6 @@
 @model List<TheDigitalCookbook.Recipe>
 @{
-    ViewData["Title"] = "Your Recipes";
+    ViewData["Title"] = $"{@ViewBag.Username}'s Recipes";
 }
 
 @if (TempData["RecipeAdded"] != null)
@@ -10,14 +10,28 @@
     </script>
 }
 
+@if (TempData["RecipeDeleted"] != null)
+{
+    <script>
+        alert('@TempData["RecipeDeleted"]');
+    </script>   
+}
+
 
 <div class="container mt-5">
-    <h1 class="mb-4">Your Recipes</h1>
+    <h1 class="mb-4">@ViewBag.Username's Recipes</h1>
     <button type="button" 
             class="btn btn-outline-secondary btn-lg"
             onclick="window.location.href='@Url.Action("Create", "Recipe")'">
         Add Recipe
     </button>
+
+    <button type="button" 
+            class="btn btn-outline-secondary btn-lg"
+            onclick="window.location.href='@Url.Action("Report", "Recipe")'">
+        Search
+    </button>
+    
 
     <p>Welcome back, @ViewBag.Username!</p>
     <p>Here are your recipes!</p>
@@ -31,7 +45,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-1" id="recipe-name">@recipe.Name</h5>
                         
-                        @* add view button *@
+                        <div class="btn-group">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-lg"
+                                    onclick="window.location.href='@Url.Action("Details", "Recipe", new {id = recipe.Id})'">
+                                View/Edit
+                            </button>
+                        </div>
                         @* add delete button *@
                         
                         <small>Date Added @recipe.CreatedAt.ToLocalTime().ToString("g")</small>
