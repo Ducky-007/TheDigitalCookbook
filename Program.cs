@@ -44,10 +44,10 @@ if (useAwsSecretsManager)
     dbHost = secretData.Host;
     dbPort = secretData.Port;
     dbUser = secretData.Username;
-    dbName = "cookbook";
+    dbName = secretData.Database ?? "mysql";
 
     connectionString =
-        $"Server={secretData.Host};Port={secretData.Port};Database=cookbook;User Id={secretData.Username};Password={secretData.Password};";
+        $"Server={secretData.Host};Port={secretData.Port};Database={dbName};User Id={secretData.Username};Password={secretData.Password};";
 
     Console.WriteLine($"AWS DB host: {dbHost}");
     Console.WriteLine($"AWS DB port: {dbPort}");
