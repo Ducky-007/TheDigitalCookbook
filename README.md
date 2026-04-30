@@ -1,165 +1,53 @@
-# TheDigitalCookbook
+# The Digital Cookbook
 
-## 1) Home page
-### Purpose
-Introduce the app and guide users to log in or register.
+The Digital Cookbook is a web application for saving, organizing, and managing personal recipes. Users can register, log in, create recipe entries, edit existing recipes, view details, search their recipe list, and delete recipes they no longer need.
 
-### What it should show
-- app name/logo
-- short description
-- buttons for:
-    - **Login**
-    - **Register**
-    - maybe **Browse recipes** if public access is allowed
+## Website
+https://whu8wp7y43.us-east-1.awsapprunner.com/
 
----
+## Features
 
-## 2) Register page
-### Purpose
-Let a new user create an account.
+- User registration and login
+- Session-based authentication
+- Create, edit, and delete recipes
+- Recipe listing and detail views
+- Recipe search/report view
+- Ingredients and instructions stored as structured lists
+- MySQL database support
+- Swagger support in development
+- Optional AWS Secrets Manager integration for database credentials
 
-### Fields
-- username
-- password
-- confirm password
+## Tech Stack
 
-### What it should do
-- validate input
-- send registration data to backend
-- show success or error messages
+- **ASP.NET Core MVC** on .NET 8
+- **Entity Framework Core**
+- **MySQL** with Pomelo EntityFrameworkCore provider
+- **AWS Secrets Manager** for secure configuration
+- **Swagger / OpenAPI**
+- **Session state** for user authentication
 
----
+## Project Structure
 
-## 3) Login page
-### Purpose
-Let existing users sign in.
+- `Controllers/` — application controllers for auth, home, and recipes
+- `Data/` — EF Core database context
+- `DTOs/` — request/response models for authentication
+- `Models/` — domain models such as users and recipes
+- `Security/` — password hashing utilities
+- `Views/` — Razor views for the web UI
 
-### Fields
-- username
-- password
+## Prerequisites
 
-### What it should do
-- validate input
-- send login request to backend
-- store auth state if login succeeds
-- redirect to dashboard or recipe list
+- .NET 8 SDK
+- MySQL 8.x or compatible database
+- Optional: AWS account and Secrets Manager secret if using cloud-based credentials
 
----
+## Configuration
 
-## 4) Recipe dashboard / recipe list page
-### Purpose
-Show all recipes for the logged-in user.
+The app can use either:
 
-### What it should show
-- list of recipe cards
-- recipe name
-- category
-- prep time / cook time
-- buttons to:
-    - view
-    - edit
-    - delete
+1. A local connection string from configuration, or
+2. AWS Secrets Manager for database settings
 
-### What it should do
-- fetch recipes from backend
-- allow searching or filtering later
+### Local development
 
----
-
-## 5) Recipe details page
-### Purpose
-Show one recipe in full detail.
-
-### What it should show
-- recipe name
-- category
-- ingredients
-- instructions
-- prep time
-- cook time
-- total time
-- URL if available
-
-### What it should do
-- load one recipe by ID
-- allow edit/delete if user owns it
-
----
-
-## 6) Create recipe page
-### Purpose
-Let users add a new recipe.
-
-### Fields
-- name
-- category
-- ingredients
-- instructions
-- prep time
-- cook time
-- URL
-
-### What it should do
-- validate form
-- send recipe data to backend
-- redirect after success
-
----
-
-## 7) Edit recipe page
-### Purpose
-Let users modify an existing recipe.
-
-### What it should do
-- load existing recipe data into form
-- let user update fields
-- send update request to backend
-
----
-
-## 8) Profile or account page
-### Purpose
-Show basic user info and account actions.
-
-### What it could include
-- username
-- account creation date
-- logout button
-
----
-
-## 9) Navigation / layout
-You should also build shared UI parts:
-
-- header
-- footer
-- nav menu
-- login/logout button
-- responsive layout for mobile
-
----
-
-## Recommended build order
-I’d build it in this order:
-
-1. **Home page**
-2. **Register page**
-3. **Login page**
-4. **Recipe list/dashboard**
-5. **Create recipe page**
-6. **Recipe details page**
-7. **Edit recipe page**
-8. **Profile page**
-9. **Polish and styling**
-
----
-
-## Best first version
-If you want to keep it simple at first, build only these pages:
-
-- Home
-- Register
-- Login
-- Recipe List
-- Create Recipe
-- Recipe Details
+Add your connection string in `appsettings.json` or user secrets:
