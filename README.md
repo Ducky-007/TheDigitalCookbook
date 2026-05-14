@@ -5,6 +5,23 @@ The Digital Cookbook is a web application for saving, organizing, and managing p
 ## Website
 https://whu8wp7y43.us-east-1.awsapprunner.com/
 
+## Screenshots
+
+User's Recipe Dashboard with User Input Alert
+
+<img width="1360" height="653" alt="image" src="https://github.com/user-attachments/assets/357470c2-1b5c-48a0-8fbf-109c31d48be9" />
+
+User's Add Recipe Page
+
+<img width="1369" height="847" alt="image" src="https://github.com/user-attachments/assets/909fd34e-06f6-4cd2-b979-d1031cd79b67" />
+
+User's Recipe Search Page
+
+<img width="1335" height="389" alt="image" src="https://github.com/user-attachments/assets/91386d7f-6ddf-47da-b308-077e9c400e76" />
+
+
+
+
 ## Features
 
 - User registration and login
